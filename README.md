@@ -35,23 +35,23 @@ If you are working in Google Colab:
 | --- | --- |
 | Project Title | Reducing 30-Day Readmission Risk for Diabetic Patients |
 | Sector | Healthcare |
-| Team ID | To be filled by team |
-| Section | To be filled by team |
-| Faculty Mentor | To be filled by team |
+| Team ID | Capstone Team |
+| Section | NST DVA Capstone 2 |
+| Faculty Mentor | Deepali ma'am |
 | Institute | Newton School of Technology |
-| Submission Date | To be filled by team |
+| Submission Date | 28 April 2026 |
 
 ## Team Members
 
 | Role | Name | GitHub Username |
 | --- | --- | --- |
-| Project Lead | To be filled | To be filled |
-| Data Lead | To be filled | To be filled |
-| ETL Lead | To be filled | To be filled |
-| Analysis Lead | To be filled | To be filled |
-| Visualization Lead | To be filled | To be filled |
-| Strategy Lead | To be filled | To be filled |
-| PPT and Quality Lead | To be filled | To be filled |
+| Project Lead | Yash Sharma | To be filled |
+| Data Lead | Manmath Mohanty | To be filled |
+| ETL Lead | Manmath Mohanty | To be filled |
+| Analysis Lead | Anuj Jain | To be filled |
+| Visualization Lead | Mehebub Alom | To be filled |
+| Strategy Lead | Aniruddh Sharma | To be filled |
+| PPT and Quality Lead | Yash Sharma | To be filled |
 
 ## Business Problem
 
@@ -254,17 +254,16 @@ Recommended Python libraries: `pandas`, `numpy`, `matplotlib`, `seaborn`, `scipy
 
 | Team Member | Dataset and Sourcing | ETL and Cleaning | EDA and Analysis | Statistical Analysis | Tableau Dashboard | Report Writing | PPT and Viva |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Member 1 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
-| Member 2 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
-| Member 3 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
-| Member 4 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
-| Member 5 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
-| Member 6 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+| Yash Sharma | Support | Support | Support | Support | Support | Owner / support | Owner |
+| Manmath Mohanty | Owner / support | Owner | Support | Support | Support | Support | Support |
+| Anuj Jain | Support | Support | Owner / support | Owner | Support | Support | Support |
+| Mehebub Alom | Support | Support | Support | Support | Owner | Support | Support |
+| Aniruddh Sharma | Support | Support | Support | Support | Support | Support | Owner / support |
 
 Declaration: We confirm that the above contribution details are accurate and verifiable through GitHub Insights, PR history, and submitted artifacts.
 
-Team Lead Name: _____________________________  
-Date: _______________
+Team Lead Name: Yash Sharma  
+Date: 28 April 2026
 
 ## Academic Integrity
 

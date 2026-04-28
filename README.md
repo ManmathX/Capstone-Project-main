@@ -1,168 +1,273 @@
-# Diabetes Readmission Capstone
+# NST DVA Capstone 2 - Project Repository
 
-This repository is set up for Capstone 2 using the UCI diabetes hospital encounters dataset. The project is intentionally scoped to a small set of high-signal columns so the analysis stays clear, defensible, and useful.
+Newton School of Technology | Data Visualization & Analytics  
+A 2-week industry simulation capstone using Python, GitHub, and Tableau to convert raw data into actionable business intelligence.
 
-## Project Goal
+## Before You Start
 
-Identify which patient and encounter factors are associated with readmission within 30 days for diabetic patients, then translate those findings into practical hospital recommendations for follow-up and discharge planning.
+- Rename the repository using the format `SectionName_TeamID_ProjectName`.
+- Fill in the project details and team table below.
+- Add the raw dataset to `data/raw/`.
+- Complete the notebooks in order from `01` to `05`.
+- Publish the final dashboard and add the public link in `tableau/dashboard_links.md`.
+- Export the final report and presentation as PDFs into `reports/`.
 
-## Problem Statement
+## Quick Start
 
-Hospitals need a simple way to identify diabetic patients who are more likely to return within 30 days. This project analyzes historical U.S. hospital encounter data to find the strongest readmission drivers and highlight high-risk patient segments that deserve early intervention.
+If you are working locally:
 
-## Dataset Plan
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook
+```
 
-### Primary Dataset
+If you are working in Google Colab:
 
-- Dataset: `data/raw/diabetic_data.csv`
-- Supporting mapping file: `data/raw/IDS_mapping.csv`
-- Source: UCI diabetes readmission dataset
-- Size: 101,766 rows and 50 columns
-- Why it works: exceeds the minimum capstone requirement and directly supports a healthcare readmission story
+- Upload or sync the notebooks from `notebooks/`
+- Keep the final `.ipynb` files committed to GitHub
+- Export any cleaned datasets into `data/processed/`
 
-### Backup Datasets
+## Project Overview
 
-- Backup 1: [CDC BRFSS Annual Survey Data](https://www.cdc.gov/brfss/annual_data/annual_data.htm)
-- Backup 2: [AHRQ MEPS Full-Year Consolidated Data Files](https://meps.ahrq.gov/mepsweb/data_stats/download_data_files.jsp/)
+| Field | Details |
+| --- | --- |
+| Project Title | Reducing 30-Day Readmission Risk for Diabetic Patients |
+| Sector | Healthcare |
+| Team ID | To be filled by team |
+| Section | To be filled by team |
+| Faculty Mentor | To be filled by team |
+| Institute | Newton School of Technology |
+| Submission Date | To be filled by team |
 
-These are listed as official backup options for Phase 1. They are not needed unless you decide to change direction.
+## Team Members
 
-## Focused Column Scope
+| Role | Name | GitHub Username |
+| --- | --- | --- |
+| Project Lead | To be filled | To be filled |
+| Data Lead | To be filled | To be filled |
+| ETL Lead | To be filled | To be filled |
+| Analysis Lead | To be filled | To be filled |
+| Visualization Lead | To be filled | To be filled |
+| Strategy Lead | To be filled | To be filled |
+| PPT and Quality Lead | To be filled | To be filled |
 
-The full dataset has 50 columns, but this capstone should start with a smaller set of features that tell a strong story.
+## Business Problem
 
-### Keep These Raw Columns
+Hospitals often struggle to identify which diabetic patients are most likely to be readmitted within 30 days after discharge. This project uses historical U.S. hospital encounter data to identify the strongest factors associated with short-term readmission. The analysis supports hospital operations teams in prioritizing follow-up and discharge planning for high-risk segments.
 
-- `age`
-- `gender`
-- `race`
-- `admission_type_id`
-- `time_in_hospital`
-- `num_medications`
-- `number_emergency`
-- `number_inpatient`
-- `A1Cresult`
-- `insulin`
-- `readmitted`
+### Core Business Question
 
-### Derived Fields Created During Cleaning
+Which patient and encounter patterns best indicate 30-day readmission risk for diabetic patients?
 
-- `admission_type`
-- `readmitted_30`
-- `prior_inpatient_group`
-- `prior_emergency_group`
-- `medication_burden_group`
-- `stay_length_group`
+### Decision Supported
 
-### Exclude These Early
+This analysis supports targeted intervention decisions, including risk-tiered discharge plans and early post-discharge follow-up.
 
-- `weight` because it is mostly missing
-- `payer_code` because missingness is high
-- `medical_specialty` because missingness is high
-- most individual drug columns because they add noise without improving the core story
+## Dataset
 
-## Why This Scope Feels Valuable
+| Attribute | Details |
+| --- | --- |
+| Source Name | UCI Diabetes 130-US hospitals dataset |
+| Direct Access Link | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/296/diabetes+130-us+hospitals+for+years+1999-2008) |
+| Row Count | 101,766 |
+| Column Count | 50 raw columns (17 cleaned columns used in analysis) |
+| Time Period Covered | 1999 to 2008 |
+| Format | CSV |
 
-This narrowed dataset still supports a meaningful hospital use case:
+### Key Columns Used
 
-- overall 30-day readmission is about 11.2%
-- patients with 3 or more prior inpatient visits have much higher readmission rates
-- patients with repeated emergency visits are also noticeably higher risk
-- longer hospital stays and heavier medication burden also show useful segmentation patterns
+| Column Name | Description | Role in Analysis |
+| --- | --- | --- |
+| `age` | Patient age group | Segmentation and dashboard filter |
+| `admission_type` | Decoded admission type | Driver analysis and filter |
+| `time_in_hospital` | Number of stay days | KPI and statistical testing |
+| `num_medications` | Medication count | Treatment complexity signal |
+| `number_emergency` | Prior emergency visits | High-risk segmentation |
+| `number_inpatient` | Prior inpatient visits | High-risk segmentation |
+| `insulin` | Insulin status | Treatment pattern comparison |
+| `readmitted_30` | 30-day readmission flag | Primary target variable |
 
-That gives you a clear recommendation angle: hospitals should prioritize follow-up for patients with repeated prior utilization and more complex current encounters.
+For full column definitions, see `data/data_dictionary.md`.
+
+## KPI Framework
+
+| KPI | Definition | Formula / Computation |
+| --- | --- | --- |
+| 30-day Readmission Rate | % of encounters readmitted within 30 days | `mean(readmitted_30) * 100` |
+| Average Length of Stay | Average days admitted | `mean(time_in_hospital)` |
+| Average Medication Count | Average medication load | `mean(num_medications)` |
+| Readmission by Prior Inpatient Group | Segment risk by prior inpatient usage | `groupby(prior_inpatient_group).mean(readmitted_30)` |
+| Readmission by Prior Emergency Group | Segment risk by prior emergency usage | `groupby(prior_emergency_group).mean(readmitted_30)` |
+
+Document KPI logic clearly in `notebooks/04_statistical_analysis.ipynb` and `notebooks/05_final_load_prep.ipynb`.
+
+## Tableau Dashboard
+
+| Item | Details |
+| --- | --- |
+| Dashboard URL | Paste Tableau Public link in `tableau/dashboard_links.md` |
+| Executive View | KPI summary and readmission distribution |
+| Operational View | Segment drill-down by utilization and treatment factors |
+| Main Filters | Age group, gender, race, admission type, insulin status |
+
+Store dashboard screenshots in `tableau/screenshots/` and document the public links in `tableau/dashboard_links.md`.
+
+## Key Insights
+
+1. 30-day readmission rate is approximately 11.16%.
+2. Prior inpatient history is the strongest risk signal.
+3. Prior emergency history also materially increases risk.
+4. Longer hospital stays show higher readmission tendency.
+5. Higher medication burden aligns with elevated readmission risk.
+6. Insulin status groups show measurable risk variation.
+7. Admission type contributes to meaningful readmission segmentation.
+8. Readmission risk is concentrated in specific subgroups, enabling targeted interventions.
+
+## Recommendations
+
+| # | Insight | Recommendation | Expected Impact |
+| --- | --- | --- | --- |
+| 1 | Prior inpatient risk concentration | Introduce risk-tiered discharge checklist for high-utilization patients | Reduced avoidable 30-day readmissions |
+| 2 | Prior emergency segment risk | Trigger mandatory early follow-up for high emergency-history patients | Better continuity of care |
+| 3 | Medication burden signal | Add focused medication reconciliation before discharge | Lower medication-related returns |
+| 4 | Non-uniform risk across segments | Prioritize care coordination resources to top-risk groups | Improved intervention ROI |
 
 ## Repository Structure
 
 ```text
-Capstone-Project-main/
+SectionName_TeamID_ProjectName/
+|
+|-- README.md
+|-- requirements.txt
+|
 |-- data/
-|   |-- raw/
-|   |   |-- diabetic_data.csv
-|   |   `-- IDS_mapping.csv
-|   |-- processed/
+|   |-- raw/                         # Original dataset (never edited)
+|   `-- processed/                   # Cleaned output from ETL pipeline
 |   `-- data_dictionary.md
+|
 |-- notebooks/
 |   |-- 02_cleaning.ipynb
 |   |-- 03_eda.ipynb
 |   `-- 04_statistical_analysis.ipynb
-|-- src/
-|   |-- clean_data.py
-|   |-- data_utils.py
-|   `-- project_config.py
+|
+|-- scripts/
+|   `-- .gitignore
+|
+|-- tableau/
+|   `-- .gitignore
+|
+|-- dashboard/
+|   `-- tableau_dashboard_plan.md
+|
+|-- presentation/
+|   `-- deck_outline.md
+|
 |-- reports/
 |   |-- final_report_outline.md
 |   |-- phase1_submission.md
 |   `-- submission_checklist.md
-|-- dashboard/
-|   `-- tableau_dashboard_plan.md
-|-- presentation/
-|   `-- deck_outline.md
-|-- requirements.txt
-`-- README.md
+|
+|-- src/
+|   |-- clean_data.py
+|   |-- data_utils.py
+|   `-- project_config.py
+|
+|-- docs/
+|   `-- .gitignore
+`-- .venv/                           # local virtual env (not required for submission)
 ```
 
-## Execution Order
+## Analytical Pipeline
 
-### Phase 1
+1. Define - Sector selected, problem statement scoped, mentor approval obtained.
+2. Extract - Raw dataset sourced and committed to `data/raw/`; data dictionary drafted.
+3. Clean and Transform - Pipeline built in `notebooks/02_cleaning.ipynb` and optionally `scripts/etl_pipeline.py`.
+4. Analyze - EDA and statistical analysis in notebooks `03` and `04`.
+5. Visualize - Interactive Tableau dashboard built and published.
+6. Recommend - 3-5 data-backed recommendations delivered.
+7. Report - Final report and presentation exported as PDFs in `reports/`.
 
-1. Review `reports/phase1_submission.md`
-2. Confirm the primary dataset and backup datasets
-3. Finalize the problem statement in the README and submission file
-4. Commit the raw files already placed in `data/raw`
+## Tech Stack
 
-### Phase 2
+| Tool | Status | Purpose |
+| --- | --- | --- |
+| Python + Jupyter Notebooks | Mandatory | ETL, cleaning, analysis, KPI computation |
+| Google Colab | Supported | Cloud notebook execution |
+| Tableau Public | Mandatory | Dashboard design and publishing |
+| GitHub | Mandatory | Version control and contribution audit |
+| SQL | Optional | Initial extraction only if documented |
 
-1. Run the cleaning notebook or `src/clean_data.py`
-2. Save the processed file to `data/processed/clean_diabetes.csv`
-3. Complete EDA in `notebooks/03_eda.ipynb`
-4. Complete statistical testing in `notebooks/04_statistical_analysis.ipynb`
-5. Build the Tableau dashboard using `dashboard/tableau_dashboard_plan.md`
-6. Finish the report and deck using the outlines in `reports/` and `presentation/`
+Recommended Python libraries: `pandas`, `numpy`, `matplotlib`, `seaborn`, `scipy`, `statsmodels`
 
-## Quick Start
+## Evaluation Rubric
 
-Create a virtual environment and install dependencies:
+| Area | Marks | Focus |
+| --- | --- | --- |
+| Problem Framing | 10 | Clear and well-scoped business question |
+| Data Quality and ETL | 15 | Thorough and documented cleaning pipeline |
+| Analysis Depth | 25 | Correct statistical methods and insights |
+| Dashboard and Visualization | 20 | Interactive and decision-relevant dashboard |
+| Business Recommendations | 20 | Actionable and well-reasoned recommendations |
+| Storytelling and Clarity | 10 | Professional and coherent communication |
+| Total | 100 |  |
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+## Submission Checklist
 
-Generate the cleaned analysis file:
+### GitHub Repository
 
-```bash
-python src/clean_data.py
-```
+- [ ] Public repository uses naming convention `SectionName_TeamID_ProjectName`
+- [ ] All notebooks committed in `.ipynb` format
+- [ ] `data/raw/` contains original unedited dataset
+- [ ] `data/processed/` contains cleaned output
+- [ ] `tableau/` contains dashboard assets and links (or published URL reference)
+- [ ] `data/data_dictionary.md` is complete
+- [ ] `README.md` includes complete project details
+- [ ] All members have visible commits and pull requests
 
-Launch notebooks:
+### Tableau Dashboard
 
-```bash
-jupyter notebook
-```
+- [ ] Published on Tableau Public with accessible URL
+- [ ] At least one interactive filter included
+- [ ] Dashboard directly addresses the business problem
 
-## Deliverables Checklist
+### Project Report
 
-- Phase 1 project framing completed
-- Primary dataset committed
-- Two backup datasets listed
-- Cleaning notebook prepared
-- EDA notebook prepared
-- Statistical analysis notebook prepared
-- Tableau dashboard plan prepared
-- Final report outline prepared
-- Presentation deck outline prepared
+- [ ] Final report exported as PDF into `reports/`
+- [ ] Includes executive summary, context, problem statement, and ETL methodology
+- [ ] Includes EDA insights, statistical results, and dashboard explanation
+- [ ] Includes 8-12 key insights and 3-5 actionable recommendations
+- [ ] Contribution matrix matches GitHub history
 
-## Official Dates
+### Presentation Deck
 
-- Capstone release: April 13, 2026
-- Final Phase 2 submission deadline: April 28, 2026
+- [ ] Final presentation exported as PDF into `reports/`
+- [ ] Includes title, problem, analysis, dashboard, recommendations, limitations, next steps
 
-## Recommended Final Story
+### Individual Assets
 
-Keep the final story simple:
+- [ ] DVA-oriented resume updated with this capstone
+- [ ] Portfolio/case-study entry added
 
-1. Which diabetic patient segments have the highest 30-day readmission risk?
-2. Which utilization and treatment patterns are most associated with readmission?
-3. What should hospitals do differently for those high-risk segments?
+## Contribution Matrix
+
+| Team Member | Dataset and Sourcing | ETL and Cleaning | EDA and Analysis | Statistical Analysis | Tableau Dashboard | Report Writing | PPT and Viva |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Member 1 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+| Member 2 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+| Member 3 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+| Member 4 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+| Member 5 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+| Member 6 | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support | Owner / support |
+
+Declaration: We confirm that the above contribution details are accurate and verifiable through GitHub Insights, PR history, and submitted artifacts.
+
+Team Lead Name: _____________________________  
+Date: _______________
+
+## Academic Integrity
+
+All analysis, code, and recommendations in this repository must be the original work of the listed team members. Free-riding is tracked via GitHub Insights and pull request history. Any mismatch between the contribution matrix and actual contribution evidence may result in individual grade adjustments.
+
+Newton School of Technology - Data Visualization & Analytics | Capstone 2
